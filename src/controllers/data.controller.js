@@ -11,13 +11,13 @@ export class DataControllers {
 
             const data = await docClient.scan(params).promise();
 
-            const items = data.Items;
-            const datosTemp = []
+            const items = (data.Items).sort((a, b) => b.seqno - a.seqno);
+            const datosTemp = [];
 
             items.map(e => {
                 datosTemp.push({
                     seqno: e.seqno,
-                    ascii: hex2a(e.data),
+                    ascii: (hex2a(e.data)).split('-'),
                     data: e.data
                 })
             });
